@@ -98,11 +98,7 @@ class MsmSlice : public Slice {
   TermConsumer* _consumer;
 };
 
-namespace std {
-  // This allows STL to swap slices more efficiently.
-  template<> inline void swap<MsmSlice>(MsmSlice& a, MsmSlice& b) {
-    a.swap(b);
-  }
-}
+inline void swap(MsmSlice& a, MsmSlice& b) { a.swap(b); }
+
 
 #endif

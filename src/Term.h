@@ -590,12 +590,8 @@ class Term {
   size_t _varCount;
 };
 
-namespace std {
-  // This allows STL to swap terms more efficiently.
-  template<> inline void swap<Term>(Term& a, Term& b) {
-    a.swap(b);
-  }
-}
+inline void swap(Term& a, Term& b) { a.swap(b); }
+
 
 inline ostream& operator<<(ostream& out, const Term& term) {
   term.print(out);
