@@ -99,6 +99,10 @@ class Term {
     ASSERT(offset < _varCount);
     return _exponents[offset];
   }
+  Exponent operator[](unsigned long long offset) const {
+    ASSERT(offset < _varCount);
+    return _exponents[offset];
+  }
 
   Exponent& operator[](int offset) {
     ASSERT(0 <= offset);
@@ -110,6 +114,10 @@ class Term {
     return _exponents[offset];
   }
   Exponent& operator[](unsigned long offset) {
+    ASSERT(offset < _varCount);
+    return _exponents[offset];
+  }
+  Exponent& operator[](unsigned long long offset) {
     ASSERT(offset < _varCount);
     return _exponents[offset];
   }

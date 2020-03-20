@@ -57,10 +57,10 @@
 
 origParams="$*" # used for debug output below
 origFrobby="../../bin/frobby"
-origFrobbyOut="/tmp/frobbyTestScriptTemporary_standardOutput"
-origFrobbyErr="/tmp/frobbyTestScriptTemporary_standardError"
-frobbyChangedErr="/tmp/frobbyTestScriptTemporary_standardErrorChanged"
-frobbyChangedInput="/tmp/frobbyTestScriptTemporary_standardInput"
+origFrobbyOut="./frobbyTestScriptTemporary_standardOutput"
+origFrobbyErr="./frobbyTestScriptTemporary_standardError"
+frobbyChangedErr="./frobbyTestScriptTemporary_standardErrorChanged"
+frobbyChangedInput="./frobbyTestScriptTemporary_standardInput"
 
 frobby="$origFrobby"
 frobbyOut="$origFrobbyOut"

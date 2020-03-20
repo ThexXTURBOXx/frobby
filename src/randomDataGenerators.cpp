@@ -25,6 +25,7 @@
 
 #include <limits>
 #include <ctime>
+#include <unistd.h>
 
 void generateLinkedListIdeal(BigIdeal& ideal, size_t variableCount) {
   VarNames names(variableCount);

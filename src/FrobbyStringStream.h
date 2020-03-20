@@ -25,6 +25,7 @@
  used for operations that need to be efficient. */
 class FrobbyStringStream {
  public:
+  FrobbyStringStream& operator<<(unsigned long long integer);
   FrobbyStringStream& operator<<(unsigned long integer);
   FrobbyStringStream& operator<<(unsigned int integer);
   FrobbyStringStream& operator<<(const mpz_class& integer);

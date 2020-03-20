@@ -9,7 +9,7 @@
 action="$1"
 shift
 
-tmpFile="/tmp/errorTestHelperTmp"
+tmpFile="./errorTestHelperTmp"
 echo "$1" > $tmpFile
 shift
 

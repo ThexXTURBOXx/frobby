@@ -3,9 +3,9 @@
 frobby=../../bin/frobby
 testhelper=../testScripts/testhelper
 test="$1"
-tmpFile=/tmp/frobbyEulerRadicalTmp
-tmpFileInverted=/tmp/frobbyEulerRadicalInvertedTmp
-tmpFileTransposed=/tmp/frobbyEulerRadicalTransposedTmp
+tmpFile=./frobbyEulerRadicalTmp
+tmpFileInverted=./frobbyEulerRadicalInvertedTmp
+tmpFileTransposed=./frobbyEulerRadicalTransposedTmp
 genPivots="rarevar popvar maxsupp minsupp any random rarest raremax"
 stdPivots="popvar rarevar popgcd any random"
 shift
