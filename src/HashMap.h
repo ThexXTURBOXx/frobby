@@ -84,8 +84,13 @@ class HashMap : public stdext::hash_map<Key, Value, HashWrapper<Key> > {
 #else // Fall-back for unknown compilers
 #include <map>
 template<class Key, class Value>
-class HashMap : public std::map<Key, Value> {
-};
+class HashMap :
+  #if __cplusplus < 201103
+       public std::map<Key, Value>
+  #else
+       public std::unordered_map<Key, Value>
+#endif
+{};
 #endif
 #endif
 

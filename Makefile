@@ -1,5 +1,18 @@
 # ***** Variables
 
+
+# ========================
+# >>>>>  GMP set-up  <<<<<
+# ========================
+# For GMP set **both**  GMP_INC_DIR  **and**  ldflags_for_gmp
+# If you have a system installation of GMP with C++ support use next 2 lines:
+# GMP_INC_DIR=
+# ldflags_for_gmp=-lgmpxx -lgmp
+GMP_INC_DIR=/usr/local/include
+ldflags_for_gmp=-L/usr/local/lib -lgmpxx -lgmp
+
+
+
 rawSources := main.cpp Action.cpp IOParameters.cpp						\
   IrreducibleDecomAction.cpp fplllIO.cpp IOHandler.cpp fourti2.cpp		\
   randomDataGenerators.cpp MonosIOHandler.cpp BigIdeal.cpp				\

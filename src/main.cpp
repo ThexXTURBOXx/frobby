@@ -24,6 +24,7 @@
 
 #include <ctime>
 #include <cstdlib>
+#include <sys/types.h>
 #include <unistd.h>
 
 /** This function runs the Frobby console interface. the ::main
