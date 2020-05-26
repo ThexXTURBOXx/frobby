@@ -1,7 +1,8 @@
 Displaying information on action: ptransform
 
 By default, transform simply writes the input polynomial to output. A
-number of parameters allow to transform the input polynomial in various ways.
+number of parameters allow one to transform the input polynomial in various
+ways.
 
 The parameters accepted by ptransform are as follows.
 

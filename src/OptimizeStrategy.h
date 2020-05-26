@@ -181,7 +181,7 @@ public:
    Consider a pivot split on \f$x_i^t\f$. Then the outer slice has
    \f$(a, b^\prime)\f$, where \f$b^\prime\f$ is equal to \f$b\f$
    except that \f$b_i^\prime:= a_i+t-1\f$. The inner slice will have
-   \f$(a',b)\f$, where \f$a^\prime\f$ is equal to \f$a\f$ except that
+   \f$(a^\prime,b)\f$, where \f$a^\prime\f$ is equal to \f$a\f$ except that
    \f$a^\prime_i := a_i + t\f$. Note that the sensible \f$t\f$'s to
    consider are those for which \f$a_i<a_i+t\leq b_i\f$. We need to
    work in terms of \f$a_i+t\f$ rather than just \f$t\f$ since we work

@@ -213,7 +213,7 @@ bin/$(library): $(objs) | bin/
 	rm -f bin/$(library)
 ifeq ($(MODE), shared)
 	$(CXX) -shared -o bin/$(library) $(ldflags) \
-	  $(patsubst $(outdir)main.o,,$(objs))
+	  $(patsubst $(outdir)main.o,,$(objs)) -lgmp -lgmpxx
 else
 	ar crs bin/$(library) $(patsubst $(outdir)main.o,,$(objs))
 	$(RANLIB) bin/$(library)
@@ -241,11 +241,8 @@ endif
 
 # Installation.
 install:
-	if [ "`uname|grep CYGWIN`" = "" ]; then \
-		sudo install bin/frobby $(BIN_INSTALL_DIR); \
-	else \
-		install bin/frobby $(BIN_INSTALL_DIR); \
-	fi  # Cygwin has no sudo
+	install -d $(DESTDIR)$(BIN_INSTALL_DIR)
+	install bin/frobby $(DESTDIR)$(BIN_INSTALL_DIR)
 
 # ***** Documentation
 

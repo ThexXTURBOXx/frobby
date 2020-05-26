@@ -36,7 +36,7 @@ void reportInternalError
 (const string& errorMsg, const char* file, unsigned int lineNumber) {
   FrobbyStringStream err;
   err << errorMsg << '\n'
-      << "The internal error occured in file " << file
+      << "The internal error occurred in file " << file
       << " on line " << lineNumber << '.';
   reportInternalError(err);
 }
