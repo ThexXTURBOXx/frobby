@@ -35,10 +35,16 @@ template<class Key>
 class FrobbyHash {};
 
 // *********************************************************
-#ifdef __GNUC__ // Only GCC defines this macro
+#if defined(__GNUC__) || defined(__clang__)
+#if 0
 #include "hash_map/hash_map"
 #include <string>
+#endif
+#include <unordered_map>
+template<class Key, class Value>
+  class HashMap : public std::unordered_map<Key, Value, FrobbyHash<Key>> { };
 
+#if 0
 template<>
 class FrobbyHash<string> : public __gnu_cxx::hash<string> {
 };
@@ -47,9 +53,8 @@ template<class Key, class Value>
 class HashMap : public __gnu_cxx::hash_map<Key, Value,
   FrobbyHash<Key> > {
 };
-
+#endif
 #else
-
 // *********************************************************
 #ifdef _MSC_VER // Only Microsoft C++ defines this macro
 #include <hash_map>
@@ -79,8 +84,13 @@ class HashMap : public stdext::hash_map<Key, Value, HashWrapper<Key> > {
 #else // Fall-back for unknown compilers
 #include <map>
 template<class Key, class Value>
-class HashMap : public std::map<Key, Value> {
-};
+class HashMap :
+  #if __cplusplus < 201103
+       public std::map<Key, Value>
+  #else
+       public std::unordered_map<Key, Value>
+#endif
+{};
 #endif
 #endif
 

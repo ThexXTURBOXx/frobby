@@ -29,6 +29,7 @@
 // Some versions of GMP do not define gmp_fprintf unless cstdio is
 // included first, so we have to include it here.
 #include <cstdio>
+#include <cstddef>
 
 #include <gmp.h>
 #include <gmpxx.h>

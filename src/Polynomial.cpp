@@ -62,7 +62,7 @@ void Polynomial::add(const mpz_class& coef, const Term& term) {
   try {
     _terms.back().coef = coef;
     _terms.back().term = term;
-  } catch (std::bad_alloc) {
+  } catch (const std::bad_alloc&) {
     _terms.pop_back();
     throw;
   }

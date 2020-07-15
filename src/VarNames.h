@@ -21,7 +21,7 @@
 
 #include <vector>
 #include <string>
-
+#include <unordered_map>
 class Scanner;
 
 /** Defines the variables of a polynomial ring and facilities IO
@@ -102,7 +102,8 @@ public:
 private:
   static bool compareNames(const string* a, const string* b);
 
-  typedef HashMap<string, size_t> VarNameMap;
+  typedef unordered_map<string, size_t> VarNameMap;
+  //typedef HashMap<string, size_t> VarNameMap;
   VarNameMap _nameToIndex;
   vector<const string*> _indexToName;
 };

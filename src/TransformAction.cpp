@@ -32,7 +32,7 @@ TransformAction::TransformAction():
 (staticGetName(),
  "Change the representation of the input ideal.",
  "By default, transform simply writes the input ideals to output. A "
- "number of parameters allow to transform the input ideal in various ways.",
+ "number of parameters allow one to transform the input ideal in various ways.",
  false),
 
   _io(DataType::getMonomialIdealType(), DataType::getMonomialIdealType()),

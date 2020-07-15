@@ -750,8 +750,8 @@ namespace __gnu_cxx {
       _Node* __first = _M_buckets[__n];
 
       for (_Node* __cur = __first; __cur; __cur = __cur->_M_next)
-    if (_M_equals(_M_get_key(__cur->_M_val), _M_get_key(__obj)))
-      return pair<iterator, bool>(iterator(__cur, this), false);
+        if (_M_equals(_M_get_key(__cur->_M_val), _M_get_key(__obj)))
+          return pair<iterator, bool>(iterator(__cur, this), false);
 
       _Node* __tmp = _M_new_node(__obj);
       __tmp->_M_next = __first;
@@ -769,14 +769,14 @@ namespace __gnu_cxx {
       _Node* __first = _M_buckets[__n];
 
       for (_Node* __cur = __first; __cur; __cur = __cur->_M_next)
-    if (_M_equals(_M_get_key(__cur->_M_val), _M_get_key(__obj)))
-      {
-        _Node* __tmp = _M_new_node(__obj);
-        __tmp->_M_next = __cur->_M_next;
-        __cur->_M_next = __tmp;
-        ++_M_num_elements;
-        return iterator(__tmp, this);
-      }
+        if (_M_equals(_M_get_key(__cur->_M_val), _M_get_key(__obj)))
+        {
+          _Node* __tmp = _M_new_node(__obj);
+          __tmp->_M_next = __cur->_M_next;
+          __cur->_M_next = __tmp;
+          ++_M_num_elements;
+          return iterator(__tmp, this);
+        }
 
       _Node* __tmp = _M_new_node(__obj);
       __tmp->_M_next = __first;
@@ -796,8 +796,8 @@ namespace __gnu_cxx {
       _Node* __first = _M_buckets[__n];
 
       for (_Node* __cur = __first; __cur; __cur = __cur->_M_next)
-    if (_M_equals(_M_get_key(__cur->_M_val), _M_get_key(__obj)))
-      return __cur->_M_val;
+        if (_M_equals(_M_get_key(__cur->_M_val), _M_get_key(__obj)))
+          return __cur->_M_val;
 
       _Node* __tmp = _M_new_node(__obj);
       __tmp->_M_next = __first;
@@ -816,19 +816,19 @@ namespace __gnu_cxx {
       const size_type __n = _M_bkt_num_key(__key);
 
       for (_Node* __first = _M_buckets[__n]; __first;
-       __first = __first->_M_next)
-    if (_M_equals(_M_get_key(__first->_M_val), __key))
-      {
-        for (_Node* __cur = __first->_M_next; __cur;
-         __cur = __cur->_M_next)
-          if (!_M_equals(_M_get_key(__cur->_M_val), __key))
-        return _Pii(iterator(__first, this), iterator(__cur, this));
-        for (size_type __m = __n + 1; __m < _M_buckets.size(); ++__m)
-          if (_M_buckets[__m])
-        return _Pii(iterator(__first, this),
-                iterator(_M_buckets[__m], this));
-        return _Pii(iterator(__first, this), end());
-      }
+           __first = __first->_M_next)
+        if (_M_equals(_M_get_key(__first->_M_val), __key))
+        {
+          for (_Node* __cur = __first->_M_next; __cur;
+               __cur = __cur->_M_next)
+            if (!_M_equals(_M_get_key(__cur->_M_val), __key))
+              return _Pii(iterator(__first, this), iterator(__cur, this));
+          for (size_type __m = __n + 1; __m < _M_buckets.size(); ++__m)
+            if (_M_buckets[__m])
+              return _Pii(iterator(__first, this),
+                          iterator(_M_buckets[__m], this));
+          return _Pii(iterator(__first, this), end());
+        }
       return _Pii(end(), end());
     }
 
@@ -842,22 +842,22 @@ namespace __gnu_cxx {
       const size_type __n = _M_bkt_num_key(__key);
 
       for (const _Node* __first = _M_buckets[__n]; __first;
-       __first = __first->_M_next)
-    {
-      if (_M_equals(_M_get_key(__first->_M_val), __key))
+           __first = __first->_M_next)
+      {
+        if (_M_equals(_M_get_key(__first->_M_val), __key))
         {
           for (const _Node* __cur = __first->_M_next; __cur;
-           __cur = __cur->_M_next)
-        if (!_M_equals(_M_get_key(__cur->_M_val), __key))
-          return _Pii(const_iterator(__first, this),
-                  const_iterator(__cur, this));
+               __cur = __cur->_M_next)
+            if (!_M_equals(_M_get_key(__cur->_M_val), __key))
+              return _Pii(const_iterator(__first, this),
+                          const_iterator(__cur, this));
           for (size_type __m = __n + 1; __m < _M_buckets.size(); ++__m)
-        if (_M_buckets[__m])
-          return _Pii(const_iterator(__first, this),
-                  const_iterator(_M_buckets[__m], this));
+            if (_M_buckets[__m])
+              return _Pii(const_iterator(__first, this),
+                          const_iterator(_M_buckets[__m], this));
           return _Pii(const_iterator(__first, this), end());
         }
-    }
+      }
       return _Pii(end(), end());
     }
 

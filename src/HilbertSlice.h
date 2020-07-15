@@ -59,11 +59,8 @@ class HilbertSlice : public Slice {
   CoefTermConsumer* _consumer;
 };
 
-namespace std {
-  // This allows STL to swap slices more efficiently.
-  template<> inline void swap<HilbertSlice>(HilbertSlice& a, HilbertSlice& b) {
-    a.swap(b);
-  }
-}
+
+inline void swap(HilbertSlice& a, HilbertSlice& b) { a.swap(b); }
+
 
 #endif

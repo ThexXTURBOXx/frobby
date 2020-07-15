@@ -99,6 +99,10 @@ class Term {
     ASSERT(offset < _varCount);
     return _exponents[offset];
   }
+  Exponent operator[](unsigned long long offset) const {
+    ASSERT(offset < _varCount);
+    return _exponents[offset];
+  }
 
   Exponent& operator[](int offset) {
     ASSERT(0 <= offset);
@@ -110,6 +114,10 @@ class Term {
     return _exponents[offset];
   }
   Exponent& operator[](unsigned long offset) {
+    ASSERT(offset < _varCount);
+    return _exponents[offset];
+  }
+  Exponent& operator[](unsigned long long offset) {
     ASSERT(offset < _varCount);
     return _exponents[offset];
   }
@@ -590,12 +598,8 @@ class Term {
   size_t _varCount;
 };
 
-namespace std {
-  // This allows STL to swap terms more efficiently.
-  template<> inline void swap<Term>(Term& a, Term& b) {
-    a.swap(b);
-  }
-}
+inline void swap(Term& a, Term& b) { a.swap(b); }
+
 
 inline ostream& operator<<(ostream& out, const Term& term) {
   term.print(out);

@@ -28,8 +28,8 @@ PolyTransformAction::PolyTransformAction():
 (staticGetName(),
  "Change the representation of the input polynomial.",
  "By default, transform simply writes the input polynomial to output. A\n"
- "number of parameters allow to transform the input polynomial in "
- "various ways.",
+ "number of parameters allow one to transform the input polynomial in various\n"
+ "ways.",
  false),
 
   _io(DataType::getPolynomialType(), DataType::getPolynomialType()),

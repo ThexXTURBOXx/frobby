@@ -41,6 +41,11 @@ FrobbyStringStream& FrobbyStringStream::operator<<(char character) {
   return *this;
 }
 
+FrobbyStringStream& FrobbyStringStream::operator<<(unsigned long long integer) {
+  appendIntegerToString(_str, integer);
+  return *this;
+}
+
 FrobbyStringStream& FrobbyStringStream::operator<<(unsigned long integer) {
   appendIntegerToString(_str, integer);
   return *this;

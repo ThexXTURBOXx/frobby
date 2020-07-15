@@ -1,5 +1,18 @@
 # ***** Variables
 
+
+# ========================
+# >>>>>  GMP set-up  <<<<<
+# ========================
+# For GMP set **both**  GMP_INC_DIR  **and**  ldflags_for_gmp
+# If you have a system installation of GMP with C++ support use next 2 lines:
+# GMP_INC_DIR=
+# ldflags_for_gmp=-lgmpxx -lgmp
+GMP_INC_DIR=/usr/local/include
+ldflags_for_gmp=-L/usr/local/lib -lgmpxx -lgmp
+
+
+
 rawSources := main.cpp Action.cpp IOParameters.cpp						\
   IrreducibleDecomAction.cpp fplllIO.cpp IOHandler.cpp fourti2.cpp		\
   randomDataGenerators.cpp MonosIOHandler.cpp BigIdeal.cpp				\
@@ -70,8 +83,7 @@ ifndef BIN_INSTALL_DIR
   BIN_INSTALL_DIR = "/usr/local/bin/"
 endif
 
-cflags = $(CFLAGS) $(CPPFLAGS) -Wall -ansi -pedantic -I $(GMP_INC_DIR)	\
-         -Wno-uninitialized -Wno-unused-parameter
+cxxflags = $(CXXFLAGS) $(CPPFLAGS) -I $(GMP_INC_DIR) -Wno-uninitialized -Wno-unused-parameter
 program = frobby
 library = libfrobby.a
 benchArgs = $(FROBBYARGS)
@@ -81,31 +93,31 @@ ifndef MODE
 endif
 
 ifndef ldflags
-  ldflags = $(cflags) $(LDFLAGS) -lgmpxx -lgmp
+  ldflags = $(LDFLAGS) -lgmpxx -lgmp
 endif
 
 MATCH=false
 ifeq ($(MODE), release)
   outdir = bin/release/
-  cflags += -O2
+  cxxflags += -O2
   MATCH=true
 endif
 ifeq ($(MODE), debug)
   rawSources := $(rawSources) $(rawTests)
   outdir = bin/debug/
-  cflags += -g -D DEBUG -fno-inline -Werror -Wextra -Wno-uninitialized \
+  cxxflags += -g -D DEBUG -fno-inline -Werror -Wextra -Wno-uninitialized \
             -Wno-unused-parameter
   MATCH=true
 endif
 ifeq ($(MODE), shared)
   outdir = bin/shared/
-  cflags += -O2 -fPIC
+  cxxflags += -O2 -fPIC
   library = libfrobby.so
   MATCH=true
 endif
 ifeq ($(MODE), profile)
   outdir = bin/profile/
-  cflags += -g -pg -O2 -D PROFILE
+  cxxflags += -g -pg -O2 -D PROFILE
   ldflags += -pg
   MATCH=true
   benchArgs = _profile $(FROBBYARGS)
@@ -113,14 +125,14 @@ endif
 ifeq ($(MODE), analysis)
   rawSources := $(rawSources) $(rawTests)
   outdir = bin/analysis/
-  cflags += -Wextra -fsyntax-only -O1 -Wfloat-equal -Wundef				\
-  -Wno-endif-labels -Wshadow -Wlarger-than-1000 -Wpointer-arith			\
-  -Wcast-qual -Wcast-align -Wwrite-strings -Wconversion -Wsign-compare	\
-  -Waggregate-return -Wmissing-noreturn -Wmissing-format-attribute		\
-  -Wno-multichar -Wno-deprecated-declarations -Wpacked					\
-  -Wno-redundant-decls -Wunreachable-code -Winline						\
-  -Wno-invalid-offsetof -Winvalid-pch -Wlong-long						\
-  -Wdisabled-optimization -D DEBUG -Werror
+  cxxflags += -Wextra -fsyntax-only -O1 -Wfloat-equal -Wundef			\
+      -Wno-endif-labels -Wshadow -Wlarger-than-1000 -Wpointer-arith		\
+      -Wcast-qual -Wcast-align -Wwrite-strings -Wconversion -Wsign-compare	\
+      -Waggregate-return -Wmissing-noreturn -Wmissing-format-attribute		\
+      -Wno-multichar -Wno-deprecated-declarations -Wpacked			\
+      -Wno-redundant-decls -Wunreachable-code -Winline				\
+      -Wno-invalid-offsetof -Winvalid-pch -Wlong-long				\
+      -Wdisabled-optimization -D DEBUG -Werror
   MATCH=true
 endif
 
@@ -214,9 +226,10 @@ bin/$(library): $(objs) | bin/
 	rm -f bin/$(library)
 ifeq ($(MODE), shared)
 	$(CXX) -shared -o bin/$(library) $(ldflags) \
-	  $(patsubst $(outdir)main.o,,$(objs))
+	  $(patsubst $(outdir)main.o,,$(objs)) -lgmp -lgmpxx
 else
 	ar crs bin/$(library) $(patsubst $(outdir)main.o,,$(objs))
+	$(RANLIB) bin/$(library)
 endif
 
 # Compile and output object files.
@@ -224,8 +237,8 @@ endif
 # to allow dependency analysis to work.
 $(outdir)%.o: src/%.cpp
 	@mkdir -p $(dir $@)
-	$(CXX) ${cflags} -c $< -o $@
-	$(CXX) $(cflags) -MM -c $< > $(@:.o=.d).tmp
+	$(CXX) ${cxxflags} -c $< -o $@
+	$(CXX) $(cxxflags) -MM -c $< > $(@:.o=.d).tmp
 # using /usr/bin/env echo to get the non-built-in echo on OS X, since
 # the built-in one does not understand the parameter -n.
 	@/usr/bin/env echo -n "$(dir $@)" > $(@:.o=.d)
@@ -241,11 +254,8 @@ endif
 
 # Installation.
 install:
-	if [ "`uname|grep CYGWIN`" = "" ]; then \
-		sudo install bin/frobby $(BIN_INSTALL_DIR); \
-	else \
-		install bin/frobby $(BIN_INSTALL_DIR); \
-	fi  # Cygwin has no sudo
+	install -d $(DESTDIR)$(BIN_INSTALL_DIR)
+	install bin/frobby $(DESTDIR)$(BIN_INSTALL_DIR)
 
 # ***** Documentation
 
