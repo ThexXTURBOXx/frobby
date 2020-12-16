@@ -97,8 +97,3 @@ static const size_t BitsPerWord = 8 * sizeof(Word);
 /// allocators must return pointer addresses that are divisible by
 /// MemoryAlignment. MemoryAlignment must be a power of 2.
 static const size_t MemoryAlignment = sizeof(long);
-
-/** @todo: move this elsewhere. */
-namespace constants {
-  extern const char* const version;
-}

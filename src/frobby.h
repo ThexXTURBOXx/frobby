@@ -314,4 +314,6 @@ namespace Frobby {
   void associatedPrimes(const Ideal& ideal, IdealConsumer& consumer);
 }
 
+extern const char* const frobby_version;
+
 #endif
