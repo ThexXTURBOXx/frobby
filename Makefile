@@ -252,10 +252,15 @@ endif
 
 -include $(objs:.o=.d)
 
+PREFIX ?= /usr/local
+MAN1DIR ?= $(PREFIX)/share/man/man1
+
 # Installation.
 install:
 	install -d $(DESTDIR)$(BIN_INSTALL_DIR)
 	install bin/frobby $(DESTDIR)$(BIN_INSTALL_DIR)
+	mkdir -p $(DESTDIR)$(MAN1DIR)
+	install -m 644 doc/frobby.1 $(DESTDIR)$(MAN1DIR)
 
 # ***** Documentation
 
