@@ -1,0 +1,12 @@
+To bump the version number, change it in these places:
+
+   doc/doxygen.conf
+	PROJECT_NUMBER         = 0.9.0
+
+   src/stdinc.cpp
+	const char* const version = "0.9.0";
+
+   test/messages/help-noparam.err
+        Frobby version 0.9.0 Copyright (C) 2007 Bjarke Hammersholt Roune
+
+
