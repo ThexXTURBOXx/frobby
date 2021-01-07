@@ -14,6 +14,7 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see http://www.gnu.org/licenses/.
 */
+#include "frobby.h"
 #include "stdinc.h"
 #include "HelpAction.h"
 
@@ -155,7 +156,7 @@ void HelpAction::perform() {
 
   FrobbyStringStream out;
 
-  out << "Frobby version " << constants::version
+  out << "Frobby version " << frobby_version
       << " Copyright (C) 2007 Bjarke Hammersholt Roune\n";
   out <<
     "Frobby performs a number of computations related to monomial "
