@@ -21,6 +21,8 @@
 
 #include "gmp.h"
 
+extern "C" const char* const frobby_version = "0.9.5";
+
 /** The namespace FrobbyImpl is for internal use inside Frobby only.
  It is not part of the public interface of Frobby.
 */
@@ -313,7 +315,5 @@ namespace Frobby {
    The prime ideals are passed to the consumer in arbitrary order. */
   void associatedPrimes(const Ideal& ideal, IdealConsumer& consumer);
 }
-
-extern const char* const frobby_version;
 
 #endif
