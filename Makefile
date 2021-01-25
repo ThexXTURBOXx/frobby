@@ -17,7 +17,7 @@ rawSources := main.cpp Action.cpp IOParameters.cpp						\
   IrreducibleDecomAction.cpp fplllIO.cpp IOHandler.cpp fourti2.cpp		\
   randomDataGenerators.cpp MonosIOHandler.cpp BigIdeal.cpp				\
   TransformAction.cpp Macaulay2IOHandler.cpp NewMonosIOHandler.cpp		\
-  HelpAction.cpp stdinc.cpp DynamicFrobeniusAction.cpp					\
+  HelpAction.cpp DynamicFrobeniusAction.cpp					\
   dynamicFrobeniusAlgorithm.cpp GenerateIdealAction.cpp					\
   GenerateFrobeniusAction.cpp intersect.cpp FrobeniusAction.cpp			\
   Facade.cpp IOFacade.cpp DynamicFrobeniusFacade.cpp					\

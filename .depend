@@ -79,7 +79,6 @@ $(outdir)NewMonosIOHandler.o: src/NewMonosIOHandler.cpp src/stdinc.h \
 $(outdir)HelpAction.o: src/HelpAction.cpp src/stdinc.h src/HelpAction.h \
   src/Action.h src/BoolParameter.h src/Parameter.h src/IOHandler.h \
   src/error.h src/DataType.h
-$(outdir)stdinc.o: src/stdinc.cpp src/stdinc.h
 $(outdir)DynamicFrobeniusAction.o: src/DynamicFrobeniusAction.cpp src/stdinc.h \
   src/DynamicFrobeniusAction.h src/Action.h src/BoolParameter.h \
   src/Parameter.h src/IOFacade.h src/Facade.h src/Timer.h \

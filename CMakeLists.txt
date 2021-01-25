@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.12)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-project(frobby VERSION 0.9.4 LANGUAGES CXX)
+project(frobby VERSION 0.9.5 LANGUAGES CXX)
 
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 
@@ -40,7 +40,7 @@ add_library(frobby STATIC
   src/intersect.cpp
   src/lattice.cpp
   src/randomDataGenerators.cpp
-  src/stdinc.cpp
+  src/stdinc.h
 
   src/Action.cpp
   src/ActionPrinter.cpp
