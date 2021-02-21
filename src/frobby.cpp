@@ -27,6 +27,8 @@
 #include "IdealFacade.h"
 #include "SliceParams.h"
 
+const char* const frobby_version = "0.9.5";
+
 class ConsumerWrapper {
 protected:
   ConsumerWrapper(size_t varCount):

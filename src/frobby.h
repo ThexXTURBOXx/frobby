@@ -21,7 +21,7 @@
 
 #include "gmp.h"
 
-const char* const frobby_version = "0.9.5";
+extern "C" const char* const frobby_version;
 
 /** The namespace FrobbyImpl is for internal use inside Frobby only.
  It is not part of the public interface of Frobby.
