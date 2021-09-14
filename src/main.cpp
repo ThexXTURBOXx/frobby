@@ -77,8 +77,10 @@ void frobbyUnexpected() {
 */
 int main(int argc, const char** argv) {
   try {
-    set_terminate(frobbyTerminate);
-    set_unexpected(frobbyUnexpected);
+    std::set_terminate(frobbyTerminate);
+#if __cplusplus < 201700L
+    std::set_unexpected(frobbyUnexpected);
+#endif
 
     srand((unsigned int)time(0) +
 #ifdef __GNUC__ // Only GCC defines this macro.
