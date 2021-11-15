@@ -236,9 +236,6 @@ ifeq ($(MODE), shared)
 	$(CXX) -shared -Wl,-soname,$(library).$(FROBBY_SOVERSION) \
 	-o bin/$(library).$(FROBBY_VERSION) $(ldflags) \
 	  $(patsubst $(outdir)main.o,,$(objs)) -lgmp -lgmpxx
-	cd bin && ln -s $(library).$(FROBBY_VERSION) \
-		$(library).$(FROBBY_SOVERSION) && \
-		ln -s $(library).$(FROBBY_VERSION) $(library)
 else
 	ar crs bin/$(library) $(patsubst $(outdir)main.o,,$(objs))
 	$(RANLIB) bin/$(library)
@@ -266,13 +263,27 @@ endif
 
 PREFIX ?= /usr/local
 MAN1DIR ?= $(PREFIX)/share/man/man1
+LIBDIR ?= $(PREFIX)/lib
 
 # Installation.
 install:
+ifneq ($(wildcard bin/frobby),)
 	install -d $(DESTDIR)$(BIN_INSTALL_DIR)
 	install bin/frobby $(DESTDIR)$(BIN_INSTALL_DIR)
 	mkdir -p $(DESTDIR)$(MAN1DIR)
 	install -m 644 doc/frobby.1 $(DESTDIR)$(MAN1DIR)
+endif
+ifneq ($(wildcard bin/$(library)*),)
+	install -d $(DESTDIR)$(LIBDIR)
+	rm -f $(DESTDIR)$(LIBDIR)/$(library)*
+	install bin/$(library)* $(DESTDIR)$(LIBDIR)
+ifeq ($(MODE),shared)
+	cd $(DESTDIR)$(LIBDIR) && \
+		ln -s $(library).$(FROBBY_VERSION) \
+			$(library).$(FROBBY_SOVERSION) && \
+		ln -s $(library).$(FROBBY_VERSION) $(library)
+endif
+endif
 
 # ***** Documentation
 
