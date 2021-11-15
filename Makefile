@@ -87,10 +87,6 @@ ifndef CXX
   CXX      = "g++"
 endif
 
-ifndef BIN_INSTALL_DIR
-  BIN_INSTALL_DIR = "/usr/local/bin/"
-endif
-
 cxxflags = $(CXXFLAGS) $(CPPFLAGS) -I $(GMP_INC_DIR) -Wno-uninitialized -Wno-unused-parameter
 program = frobby
 library = libfrobby.a
@@ -262,14 +258,15 @@ endif
 -include $(objs:.o=.d)
 
 PREFIX ?= /usr/local
+BINDIR ?= $(PREFIX)/bin
 MAN1DIR ?= $(PREFIX)/share/man/man1
 LIBDIR ?= $(PREFIX)/lib
 
 # Installation.
 install:
 ifneq ($(wildcard bin/frobby),)
-	install -d $(DESTDIR)$(BIN_INSTALL_DIR)
-	install bin/frobby $(DESTDIR)$(BIN_INSTALL_DIR)
+	install -d $(DESTDIR)$(BINDIR)
+	install bin/frobby $(DESTDIR)$(BINDIR)
 	mkdir -p $(DESTDIR)$(MAN1DIR)
 	install -m 644 doc/frobby.1 $(DESTDIR)$(MAN1DIR)
 endif
