@@ -11,7 +11,15 @@
 GMP_INC_DIR=/usr/local/include
 ldflags_for_gmp=-L/usr/local/lib -lgmpxx -lgmp
 
-
+# shared library version
+# bump if interfaces added, removed, or changed
+FROBBY_CURRENT = 1
+# bump at every release, set to 0 if any interfaces added, removed, or changed
+FROBBY_REVISION = 0
+# bump if interfaces added, set to 0 if removed or changed
+FROBBY_AGE = 0
+FROBBY_SOVERSION := $(shell expr $(FROBBY_CURRENT) - $(FROBBY_AGE))
+FROBBY_VERSION := $(FROBBY_SOVERSION).$(FROBBY_AGE).$(FROBBY_REVISION)
 
 rawSources := main.cpp Action.cpp IOParameters.cpp						\
   IrreducibleDecomAction.cpp fplllIO.cpp IOHandler.cpp fourti2.cpp		\
@@ -225,8 +233,12 @@ library: bin/$(library)
 bin/$(library): $(objs) | bin/
 	rm -f bin/$(library)
 ifeq ($(MODE), shared)
-	$(CXX) -shared -o bin/$(library) $(ldflags) \
+	$(CXX) -shared -Wl,-soname,$(library).$(FROBBY_SOVERSION) \
+	-o bin/$(library).$(FROBBY_VERSION) $(ldflags) \
 	  $(patsubst $(outdir)main.o,,$(objs)) -lgmp -lgmpxx
+	cd bin && ln -s $(library).$(FROBBY_VERSION) \
+		$(library).$(FROBBY_SOVERSION) && \
+		ln -s $(library).$(FROBBY_VERSION) $(library)
 else
 	ar crs bin/$(library) $(patsubst $(outdir)main.o,,$(objs))
 	$(RANLIB) bin/$(library)
