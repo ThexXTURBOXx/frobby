@@ -270,15 +270,19 @@ ifneq ($(wildcard bin/frobby),)
 	mkdir -p $(DESTDIR)$(MAN1DIR)
 	install -m 644 doc/frobby.1 $(DESTDIR)$(MAN1DIR)
 endif
-ifneq ($(wildcard bin/$(library)*),)
+ifneq ($(wildcard bin/libfrobby*),)
 	install -d $(DESTDIR)$(LIBDIR)
-	rm -f $(DESTDIR)$(LIBDIR)/$(library)*
-	install bin/$(library)* $(DESTDIR)$(LIBDIR)
-ifeq ($(MODE),shared)
+ifneq ($(wildcard bin/libfrobby.a),)
+	install bin/libfrobby.a $(DESTDIR)$(LIBDIR)
+endif
+ifneq ($(wildcard bin/libfrobby.so.$(FROBBY_VERSION)),)
+	install bin/libfrobby.so.$(FROBBY_VERSION) $(DESTDIR)$(LIBDIR)
 	cd $(DESTDIR)$(LIBDIR) && \
-		ln -s $(library).$(FROBBY_VERSION) \
-			$(library).$(FROBBY_SOVERSION) && \
-		ln -s $(library).$(FROBBY_VERSION) $(library)
+		rm -f libfrobby.so.$(FROBBY_SOVERSION) && \
+		ln -s libfrobby.so.$(FROBBY_VERSION) \
+			libfrobby.so.$(FROBBY_SOVERSION) && \
+		rm -f libfrobby.so && \
+		ln -s libfrobby.so.$(FROBBY_VERSION) libfrobby.so
 endif
 endif
 
