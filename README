@@ -12,4 +12,5 @@ To bump the version number, change it in these places:
    test/messages/help-noparam.err
         Frobby version 0.9.5 Copyright (C) 2007 Bjarke Hammersholt Roune
 
-
+Also, update the library version by setting FROBBY_CURRENT, FROBBY_REVISION,
+and FROBBY_AGE as outlined in Makefile.

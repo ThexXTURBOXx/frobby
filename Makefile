@@ -11,7 +11,15 @@
 GMP_INC_DIR=/usr/local/include
 ldflags_for_gmp=-L/usr/local/lib -lgmpxx -lgmp
 
-
+# shared library version
+# bump if interfaces added, removed, or changed
+FROBBY_CURRENT = 1
+# bump at every release, set to 0 if any interfaces added, removed, or changed
+FROBBY_REVISION = 0
+# bump if interfaces added, set to 0 if removed or changed
+FROBBY_AGE = 0
+FROBBY_SOVERSION := $(shell expr $(FROBBY_CURRENT) - $(FROBBY_AGE))
+FROBBY_VERSION := $(FROBBY_SOVERSION).$(FROBBY_AGE).$(FROBBY_REVISION)
 
 rawSources := main.cpp Action.cpp IOParameters.cpp						\
   IrreducibleDecomAction.cpp fplllIO.cpp IOHandler.cpp fourti2.cpp		\
@@ -77,10 +85,6 @@ rawTests := LibAlexanderDualTest.cpp LibHilbertPoincareTest.cpp			\
 
 ifndef CXX
   CXX      = "g++"
-endif
-
-ifndef BIN_INSTALL_DIR
-  BIN_INSTALL_DIR = "/usr/local/bin/"
 endif
 
 cxxflags = $(CXXFLAGS) $(CPPFLAGS) -I $(GMP_INC_DIR) -Wno-uninitialized -Wno-unused-parameter
@@ -225,7 +229,8 @@ library: bin/$(library)
 bin/$(library): $(objs) | bin/
 	rm -f bin/$(library)
 ifeq ($(MODE), shared)
-	$(CXX) -shared -o bin/$(library) $(ldflags) \
+	$(CXX) -shared -Wl,-soname,$(library).$(FROBBY_SOVERSION) \
+	-o bin/$(library).$(FROBBY_VERSION) $(ldflags) \
 	  $(patsubst $(outdir)main.o,,$(objs)) -lgmp -lgmpxx
 else
 	ar crs bin/$(library) $(patsubst $(outdir)main.o,,$(objs))
@@ -253,14 +258,33 @@ endif
 -include $(objs:.o=.d)
 
 PREFIX ?= /usr/local
+BINDIR ?= $(PREFIX)/bin
 MAN1DIR ?= $(PREFIX)/share/man/man1
+LIBDIR ?= $(PREFIX)/lib
 
 # Installation.
 install:
-	install -d $(DESTDIR)$(BIN_INSTALL_DIR)
-	install bin/frobby $(DESTDIR)$(BIN_INSTALL_DIR)
+ifneq ($(wildcard bin/frobby),)
+	install -d $(DESTDIR)$(BINDIR)
+	install bin/frobby $(DESTDIR)$(BINDIR)
 	mkdir -p $(DESTDIR)$(MAN1DIR)
 	install -m 644 doc/frobby.1 $(DESTDIR)$(MAN1DIR)
+endif
+ifneq ($(wildcard bin/libfrobby*),)
+	install -d $(DESTDIR)$(LIBDIR)
+ifneq ($(wildcard bin/libfrobby.a),)
+	install bin/libfrobby.a $(DESTDIR)$(LIBDIR)
+endif
+ifneq ($(wildcard bin/libfrobby.so.$(FROBBY_VERSION)),)
+	install bin/libfrobby.so.$(FROBBY_VERSION) $(DESTDIR)$(LIBDIR)
+	cd $(DESTDIR)$(LIBDIR) && \
+		rm -f libfrobby.so.$(FROBBY_SOVERSION) && \
+		ln -s libfrobby.so.$(FROBBY_VERSION) \
+			libfrobby.so.$(FROBBY_SOVERSION) && \
+		rm -f libfrobby.so && \
+		ln -s libfrobby.so.$(FROBBY_VERSION) libfrobby.so
+endif
+endif
 
 # ***** Documentation
 
