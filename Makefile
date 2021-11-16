@@ -143,6 +143,8 @@ endif
 sources = $(patsubst %.cpp, src/%.cpp, $(rawSources))
 objs    = $(patsubst %.cpp, $(outdir)%.o, $(rawSources))
 
+RANLIB = ranlib
+
 # ***** Compilation
 
 .PHONY: all depend clean bin/$(program) test library distribution clear fixspace
